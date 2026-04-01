@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparison for Material Selection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Base typography and smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #18181b; /* zinc-900 */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Required Chart Container Styling */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 420px;
+            max-height: 500px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        /* Minimalist specific overrides - NOW WITH SUBTLE COLOR */
+        .tab-active {
+            border-bottom-width: 2px;
+            border-color: #2563eb; /* blue-600 */
+            color: #1d4ed8; /* blue-700 */
+            font-weight: 500;
+        }
+        
+        .material-btn-active {
+            background-color: #eff6ff; /* blue-50 */
+            border-left-width: 2px;
+            border-color: #3b82f6; /* blue-500 */
+        }
+
+        /* Hide scrollbar for horizontal scrolling containers */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+
+    <!-- Chosen Palette: Professional Minimalist (White, Zinc-50 to Zinc-900). Material data retains specific colors for chart legibility. -->
+    <!-- Application Structure Plan: 
+         1. Hero: Ultra-clean, authoritative document title.
+         2. Criteria: Numbered, grid-based, separated by thin borders (Swiss design influence).
+         3. Material Deep Dive: Split-pane layout. Left: Clean list. Right: Borderless data presentation.
+         4. Quantitative Comparison: Minimalist table and refined radar chart without distracting backgrounds. -->
+    <!-- Visualization & Content Choices: 
+         - Flat Design: No shadows, no rounded corners larger than 'sm', thin 1px borders.
+         - Typography scaled up for research readability.
+         - Radar Chart (Chart.js): Grayscale grid, transparent backgrounds, prominent data lines.
+         - NO SVG/Mermaid. Icons replaced by typography (e.g., '+', '→', '01'). -->
+</head>
+<body class="selection:bg-zinc-200 selection:text-zinc-900">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-zinc-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <span class="text-base font-bold text-zinc-900 tracking-widest uppercase">BioPrint Analysis</span>
+                </div>
+                <div class="hidden md:flex space-x-10 items-center">
+                    <a href="#criteria" class="text-sm font-medium text-zinc-500 hover:text-blue-600 transition-colors uppercase tracking-wider">Criteria</a>
+                    <a href="#materials" class="text-sm font-medium text-zinc-500 hover:text-blue-600 transition-colors uppercase tracking-wider">Materials</a>
+                    <a href="#comparison" class="text-sm font-medium text-zinc-500 hover:text-blue-600 transition-colors uppercase tracking-wider">Comparison</a>
+                    <a href="#references" class="text-sm font-medium text-zinc-500 hover:text-blue-600 transition-colors uppercase tracking-wider">References</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-36 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-b border-zinc-200 overflow-hidden">
+        <!-- Subtle Ambient Color Blobs -->
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-40 -z-10 transform -translate-y-1/2"></div>
+        <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-indigo-50 rounded-full mix-blend-multiply filter blur-3xl opacity-60 -z-10"></div>
+        
+        <div class="max-w-4xl relative z-10">
+            <h1 class="text-5xl sm:text-7xl font-normal text-zinc-900 tracking-tight leading-tight">
+                Comparison for Material Selection.
+            </h1>
+        </div>
+    </header>
+
+    <!-- Criteria Section -->
+    <section id="criteria" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16">
+                <h2 class="text-3xl font-medium text-zinc-900 tracking-tight">Evaluation Criteria</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-14 gap-y-12">
+                <div class="border-t-2 border-blue-200 pt-6">
+                    <span class="text-blue-500 font-mono text-base block mb-5 font-semibold">01</span>
+                    <h3 class="text-xl font-medium text-zinc-900">Biocompatibility</h3>
+                </div>
+                <div class="border-t-2 border-indigo-200 pt-6">
+                    <span class="text-indigo-500 font-mono text-base block mb-5 font-semibold">02</span>
+                    <h3 class="text-xl font-medium text-zinc-900">Ergonomics & Hardness</h3>
+                </div>
+                <div class="border-t-2 border-sky-200 pt-6">
+                    <span class="text-sky-500 font-mono text-base block mb-5 font-semibold">03</span>
+                    <h3 class="text-xl font-medium text-zinc-900">Manufacturing Access</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Material Candidates Section -->
+    <section id="materials" class="py-24 border-t border-zinc-200 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-3xl font-medium text-zinc-900 tracking-tight">Candidate Profiles</h2>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-0 lg:gap-12 border border-zinc-200 bg-white shadow-sm rounded-sm">
+                <!-- Material Selection List -->
+                <div class="w-full lg:w-1/3 border-b lg:border-b-0 lg:border-r border-zinc-200 h-[650px] overflow-y-auto bg-slate-50/50" id="material-list">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Material Detail Panel -->
+                <div class="w-full lg:w-2/3 p-6 lg:p-12 min-h-[650px] bg-white">
+                    <div id="material-detail-content" class="h-full">
+                        <!-- Initial State -->
+                        <div class="h-full flex items-center justify-center text-zinc-400 font-light text-lg">
+                            Select a material to view specifications.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="comparison" class="py-24 bg-zinc-50 border-t border-zinc-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16">
+                <h2 class="text-3xl font-medium text-zinc-900 tracking-tight">Quantitative Analysis</h2>
+                <p class="text-zinc-500 text-base mt-3 font-light">Comparative evaluation of AM materials vs. commercial benchmarks.</p>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-16 items-start">
+                <!-- Comparison Table -->
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-zinc-300 border-b border-zinc-300">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="py-4 text-left text-sm font-medium text-zinc-500 uppercase tracking-widest">Material</th>
+                                <th scope="col" class="py-4 text-left text-sm font-medium text-zinc-500 uppercase tracking-widest">Process</th>
+                                <th scope="col" class="py-4 text-left text-sm font-medium text-zinc-500 uppercase tracking-widest">Shore</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-200" id="comparison-table-body">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Radar Chart -->
+                <div class="bg-white p-8 border border-zinc-200">
+                    <div class="chart-container">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                    <div class="mt-10 flex flex-wrap gap-3 justify-center" id="chart-legend-controls">
+                        <!-- Toggle buttons generated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hardness Scale Reference Section -->
+    <section id="hardness-scale" class="py-24 bg-white border-t border-zinc-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-3xl font-medium text-zinc-900 tracking-tight">Shore Hardness Reference</h2>
+                <p class="text-zinc-500 text-base mt-3 font-light">Visual guide for durometer scales used in evaluating earbud material ergonomics.</p>
+            </div>
+            
+            <div class="border border-zinc-200 p-8 sm:p-12 bg-zinc-50 flex flex-col items-center">
+                <img src="https://miconveyancesolutions.com/wp-content/uploads/2023/10/shore-hardness-scale-for-Mi-Conveyance-Solutions.webp" alt="Shore Hardness Scale Diagram" class="w-full max-w-4xl mix-blend-multiply">
+                <p class="text-xs text-zinc-400 font-mono uppercase tracking-widest mt-10">Fig 1. Durometer and Shore Hardness Scales Overview</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- References Section -->
+    <section id="references" class="py-24 border-t border-zinc-200 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-3xl font-medium text-zinc-900 tracking-tight">References & Sources</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                <a href="https://www.samsung.com/ca/support/mobile-devices/wearing-the-galaxy-buds/?msockid=1b868a11c7fe6c693aa298c8c6236d8c" target="_blank" class="group block border-l-2 border-zinc-200 pl-4 hover:border-blue-500 transition-colors">
+                    <h4 class="font-medium text-zinc-900 text-base mb-1 group-hover:text-blue-600 transition-colors">Samsung Galaxy Buds: Wearing Guide</h4>
+                    <p class="text-sm text-zinc-500 font-light truncate">samsung.com/ca/support/mobile-devices</p>
+                </a>
+
+                <a href="https://www.siliconepartner.com/applications-of-liquid-silicone-rubber-in-hearing-device-components/" target="_blank" class="group block border-l-2 border-zinc-200 pl-4 hover:border-blue-500 transition-colors">
+                    <h4 class="font-medium text-zinc-900 text-base mb-1 group-hover:text-blue-600 transition-colors">Applications of LSR in Hearing Device Components</h4>
+                    <p class="text-sm text-zinc-500 font-light truncate">siliconepartner.com</p>
+                </a>
+
+                <a href="https://silicorex.com/liquid-silicone-rubber-lsr-overview/" target="_blank" class="group block border-l-2 border-zinc-200 pl-4 hover:border-blue-500 transition-colors">
+                    <h4 class="font-medium text-zinc-900 text-base mb-1 group-hover:text-blue-600 transition-colors">Liquid Silicone Rubber (LSR) Overview</h4>
+                    <p class="text-sm text-zinc-500 font-light truncate">silicorex.com</p>
+                </a>
+
+                <a href="https://formlabs.com/store/materials/biomed-elastic-50a-resin/" target="_blank" class="group block border-l-2 border-zinc-200 pl-4 hover:border-blue-500 transition-colors">
+                    <h4 class="font-medium text-zinc-900 text-base mb-1 group-hover:text-blue-600 transition-colors">BioMed Elastic 50A Resin Datasheet</h4>
+                    <p class="text-sm text-zinc-500 font-light truncate">formlabs.com/store/materials</p>
+                </a>
+
+                <a href="https://formlabs.com/blog/biocompatible-audio-applications/" target="_blank" class="group block border-l-2 border-zinc-200 pl-4 hover:border-blue-500 transition-colors">
+                    <h4 class="font-medium text-zinc-900 text-base mb-1 group-hover:text-blue-600 transition-colors">Biocompatible Audio Applications in AM</h4>
+                    <p class="text-sm text-zinc-500 font-light truncate">formlabs.com/blog</p>
+                </a>
+
+                <a href="https://www.lubrizol.com/solutions/technologies/tpu/medical-grade-tpu" target="_blank" class="group block border-l-2 border-zinc-200 pl-4 hover:border-blue-500 transition-colors">
+                    <h4 class="font-medium text-zinc-900 text-base mb-1 group-hover:text-blue-600 transition-colors">Medical Grade TPU Technologies</h4>
+                    <p class="text-sm text-zinc-500 font-light truncate">lubrizol.com/solutions</p>
+                </a>
+
+                <a href="https://cubicsky.sa/en/TPU-95A-eSun-1kg-Filament-Antibacterial-Cut-Resistant-Natural-no-coloring-added/p1218203108?srsltid=AfmBOora3SgDv1hwGk0Ht8pXib3r2Gamvb2ztYrQVacHKrCqe1l831De" target="_blank" class="group block border-l-2 border-zinc-200 pl-4 hover:border-blue-500 transition-colors">
+                    <h4 class="font-medium text-zinc-900 text-base mb-1 group-hover:text-blue-600 transition-colors">eSun Antibacterial TPU-95A Filament</h4>
+                    <p class="text-sm text-zinc-500 font-light truncate">cubicsky.sa/en</p>
+                </a>
+
+                <a href="https://elastapro.com/medical-grade-silicone/#:~:text=Common%20uses%20for%20medical%20grade%20silicone%20sheets,*%20Safe%20for%20steam%20and%20gamma%20sterilization" target="_blank" class="group block border-l-2 border-zinc-200 pl-4 hover:border-blue-500 transition-colors">
+                    <h4 class="font-medium text-zinc-900 text-base mb-1 group-hover:text-blue-600 transition-colors">Medical Grade Silicone Properties & Uses</h4>
+                    <p class="text-sm text-zinc-500 font-light truncate">elastapro.com</p>
+                </a>
+
+                <a href="https://www.addmangroup.com/process-material/nylon-12-pa/#:~:text=Nylon%2012%20PA-,Nylon%2012%20PA%20is%20a%20high%2Ddensity%20thermoplastic%20known%20for,reliable%20choice%20for%20medical%20applications." target="_blank" class="group block border-l-2 border-zinc-200 pl-4 hover:border-blue-500 transition-colors">
+                    <h4 class="font-medium text-zinc-900 text-base mb-1 group-hover:text-blue-600 transition-colors">Nylon 12 (PA12) Material Properties</h4>
+                    <p class="text-sm text-zinc-500 font-light truncate">addmangroup.com/process-material</p>
+                </a>
+
+                <a href="https://miconveyancesolutions.com/why-its-important-to-understand-durometer-and-shore-hardness-scales/" target="_blank" class="group block border-l-2 border-zinc-200 pl-4 hover:border-blue-500 transition-colors">
+                    <h4 class="font-medium text-zinc-900 text-base mb-1 group-hover:text-blue-600 transition-colors">Understanding Durometer and Shore Hardness</h4>
+                    <p class="text-sm text-zinc-500 font-light truncate">miconveyancesolutions.com</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-900 py-16 text-center border-t border-zinc-800">
+        <p class="text-zinc-500 text-sm font-mono tracking-widest uppercase">University Engineering Project Analysis &bull; 2026</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- Data Storage ---
+        // Colors updated to be slightly muted for professional aesthetic, while retaining hue distinction.
+        const materialData = [
+            // Benchmarks (Commercial Standards)
+            {
+                id: 'commercial-lsr',
+                name: 'Liquid Silicone Rubber (LSR)',
+                category: 'Injection Molding',
+                shortDesc: 'Mass-market industry standard used in premium earbud tips (e.g., AirPods Pro).',
+                biocompatibility: 'Highest (Medical Grade)',
+                hardness: 'Shore 30A - 40A',
+                tech: 'Injection Molding',
+                costAccess: 'Low (Tooling required)',
+                durability: 'Excellent',
+                color: 'rgba(113, 113, 122, 1)', // zinc-500
+                scores: { comfort: 10, safety: 10, durability: 9, printability: 1, cost: 2 },
+                pros: [
+                    'Ultimate standard for skin-safe mucosal contact.',
+                    'Perfect surface finish and acoustic sealing.',
+                    'Highly durable and tear-resistant for daily use.'
+                ],
+                cons: [
+                    'Requires industrial machinery and expensive steel tooling.',
+                    'Zero mass-customization capability (restricted to S/M/L sizes).'
+                ]
+            },
+            {
+                id: 'commercial-pc',
+                name: 'Polycarbonate / ABS',
+                category: 'Injection Molding',
+                shortDesc: 'Rigid plastic used for the main outer shell of commercial wireless earbuds.',
+                biocompatibility: 'High (Coated)',
+                hardness: 'Rigid',
+                tech: 'Injection Molding',
+                costAccess: 'Low (Tooling required)',
+                durability: 'Excellent',
+                color: 'rgba(39, 39, 42, 1)', // zinc-800
+                scores: { comfort: 2, safety: 9, durability: 10, printability: 1, cost: 2 },
+                pros: [
+                    'High impact resistance to protect electronics.',
+                    'Exceptional glossy surface finish.',
+                    'Extremely low unit cost at high scale.'
+                ],
+                cons: [
+                    'Incompatible with in-ear canal ergonomics.',
+                    'Cannot be customized to individual geometries.'
+                ]
+            },
+            // AM Materials
+            {
+                id: 'biomed-elastic',
+                name: 'BioMed Elastic 50A',
+                category: 'SLA (Resin)',
+                shortDesc: 'Soft, flexible, medical-grade resin for direct printing.',
+                biocompatibility: 'High (ISO 10993)',
+                hardness: 'Shore 50A',
+                tech: 'SLA Printing',
+                costAccess: 'Medium',
+                durability: 'Good',
+                color: 'rgba(2, 132, 199, 1)', // sky-600
+                scores: { comfort: 9, safety: 10, durability: 7, printability: 7, cost: 5 },
+                pros: [
+                    'Certified medical grade immediately post-cure.',
+                    'Direct printing eliminates molds, enabling instant customization.',
+                    'Shore 50A hardness mimics soft tissue.'
+                ],
+                cons: [
+                    'Requires specific closed-ecosystem SLA hardware.',
+                    'Strict post-processing required to maintain medical certification.',
+                    'High material cost per liter.'
+                ]
+            },
+            {
+                id: 'biomed-clear',
+                name: 'BioMed Clear Resin',
+                category: 'SLA (Resin)',
+                shortDesc: 'Rigid, transparent, biocompatible resin ideal for custom acoustic shells.',
+                biocompatibility: 'High (ISO 10993)',
+                hardness: 'Rigid',
+                tech: 'SLA Printing',
+                costAccess: 'Medium',
+                durability: 'High',
+                color: 'rgba(6, 182, 212, 1)', // cyan-500
+                scores: { comfort: 3, safety: 10, durability: 8, printability: 7, cost: 5 },
+                pros: [
+                    'Exceptional biocompatibility for long-term mucosal contact.',
+                    'High optical transparency for premium aesthetic finishes.',
+                    'Excellent dimensional accuracy for intricate acoustic channels.'
+                ],
+                cons: [
+                    'Too rigid for universal in-ear comfort; requires a soft tip or perfect 3D scan fit.',
+                    'Requires specific closed-ecosystem SLA hardware and strict washing/curing.',
+                    'Can be brittle under high impact compared to engineering plastics.'
+                ]
+            },
+            {
+                id: 'medical-tpu',
+                name: 'Medical-Grade TPU',
+                category: 'FDM (Filament)',
+                shortDesc: 'Flexible filament, highly durable, varying bio-certifications.',
+                biocompatibility: 'Moderate',
+                hardness: 'Shore 85A - 95A',
+                tech: 'FDM Printing',
+                costAccess: 'High',
+                durability: 'Excellent',
+                color: 'rgba(217, 119, 6, 1)', // amber-600
+                scores: { comfort: 6, safety: 7, durability: 9, printability: 8, cost: 9 },
+                pros: [
+                    'Printable on standard open-source university FDM printers.',
+                    'Extremely low material cost.',
+                    'High abrasion and tear resistance.'
+                ],
+                cons: [
+                    'Shore 85A is too rigid for inner-ear comfort, causing pressure points.',
+                    'FDM layer lines harbor bacteria; requires intensive post-processing.',
+                    'Poor resolution for intricate acoustic channels.'
+                ]
+            },
+            {
+                id: 'silicone-cast',
+                name: 'Indirect Silicone Cast',
+                category: 'Hybrid Process',
+                shortDesc: '3D print a negative mold, cast medical-grade platinum silicone.',
+                biocompatibility: 'Highest',
+                hardness: 'Shore 10A - 40A',
+                tech: 'Mold & Cast',
+                costAccess: 'Medium',
+                durability: 'Excellent',
+                color: 'rgba(5, 150, 105, 1)', // emerald-600
+                scores: { comfort: 10, safety: 10, durability: 10, printability: 4, cost: 8 },
+                pros: [
+                    'Highest quality final part, physically matching commercial LSR.',
+                    'Hardness is perfectly tunable based on silicone mixture.',
+                    'Molds can be manufactured on low-cost FDM hardware.'
+                ],
+                cons: [
+                    'Complex multi-step labor (design, print, degas, cast, demold).',
+                    'Difficult to scale for mass customization without automation.'
+                ]
+            },
+            {
+                id: 'pa12-nylon',
+                name: 'Nylon 12 (PA12)',
+                category: 'SLS (Powder)',
+                shortDesc: 'Rigid, skin-safe powder suitable for structural around-ear hooks.',
+                biocompatibility: 'Moderate',
+                hardness: 'Rigid',
+                tech: 'SLS Printing',
+                costAccess: 'Medium',
+                durability: 'Excellent',
+                color: 'rgba(79, 70, 229, 1)', // indigo-600
+                scores: { comfort: 4, safety: 8, durability: 10, printability: 6, cost: 6 },
+                pros: [
+                    'No support structures required; allows extreme geometric complexity.',
+                    'Lightweight with high tensile strength.',
+                    'Skin-safe for external (non-mucosal) contact.'
+                ],
+                cons: [
+                    'Comfort relies entirely on geometric compliant mechanisms, not material softness.',
+                    'Porous surface requires sealing to prevent sweat absorption.',
+                    'Batch-based SLS printing increases prototype iteration time.'
+                ]
+            }
+        ];
+
+        let radarChart = null;
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMaterialList();
+            renderComparisonTable();
+            initRadarChart();
+            
+            // Select first material by default
+            selectMaterial(materialData[0].id);
+        });
+
+        // --- UI Rendering Functions ---
+
+        function renderMaterialList() {
+            const listContainer = document.getElementById('material-list');
+            listContainer.innerHTML = '';
+
+            materialData.forEach(mat => {
+                const isBenchmark = mat.category.includes('Injection');
+                const badge = isBenchmark ? `<span class="ml-3 text-[10px] font-mono tracking-widest text-indigo-400 uppercase font-medium">Benchmark</span>` : '';
+                
+                const btn = document.createElement('button');
+                // Clean, borderless list items with slight blue hover
+                btn.className = `w-full text-left py-6 px-5 border-b border-zinc-200 bg-transparent hover:bg-blue-50/50 transition-colors material-btn relative`;
+                btn.dataset.id = mat.id;
+                btn.onclick = () => selectMaterial(mat.id);
+                
+                btn.innerHTML = `
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="font-medium text-zinc-900 text-base">${mat.name}</h4>
+                        <span class="w-3 h-3 rounded-full shrink-0" style="background-color: ${mat.color}"></span>
+                    </div>
+                    <p class="text-sm text-zinc-500 font-light flex items-center">
+                        ${mat.tech} ${badge}
+                    </p>
+                `;
+                listContainer.appendChild(btn);
+            });
+        }
+
+        function selectMaterial(id) {
+            // Update active state in list
+            document.querySelectorAll('.material-btn').forEach(btn => {
+                if (btn.dataset.id === id) {
+                    btn.classList.add('material-btn-active');
+                    btn.classList.remove('hover:bg-blue-50/50');
+                } else {
+                    btn.classList.remove('material-btn-active');
+                    btn.classList.add('hover:bg-blue-50/50');
+                }
+            });
+
+            // Update details panel
+            const mat = materialData.find(m => m.id === id);
+            const detailContainer = document.getElementById('material-detail-content');
+            
+            const isBenchmark = mat.category.includes('Injection');
+
+            detailContainer.innerHTML = `
+                <div class="flex flex-col mb-12">
+                    <span class="text-sm font-mono text-blue-500 uppercase tracking-widest mb-4 block font-medium">${mat.category} ${isBenchmark ? '&bull; Benchmark' : ''}</span>
+                    <h3 class="text-4xl font-normal text-zinc-900 tracking-tight mb-5">${mat.name}</h3>
+                    <p class="text-lg text-zinc-600 font-light leading-relaxed max-w-2xl">${mat.shortDesc}</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-x-10 gap-y-8 mb-14 border-y border-zinc-100 py-10 bg-slate-50/30 px-6 -mx-6 rounded-sm">
+                    <div>
+                        <span class="block text-xs font-mono text-zinc-500 uppercase tracking-widest mb-2">Hardness</span>
+                        <span class="text-base font-medium text-zinc-900">${mat.hardness}</span>
+                    </div>
+                    <div>
+                        <span class="block text-xs font-mono text-zinc-500 uppercase tracking-widest mb-2">Biocompatibility</span>
+                        <span class="text-base font-medium text-zinc-900">${mat.biocompatibility}</span>
+                    </div>
+                    <div>
+                        <span class="block text-xs font-mono text-zinc-500 uppercase tracking-widest mb-2">Durability</span>
+                        <span class="text-base font-medium text-zinc-900">${mat.durability}</span>
+                    </div>
+                    <div>
+                        <span class="block text-xs font-mono text-zinc-500 uppercase tracking-widest mb-2">Lab Access</span>
+                        <span class="text-base font-medium text-zinc-900">${mat.costAccess}</span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex space-x-10 border-b border-zinc-200 mb-8">
+                        <button class="tab-btn tab-active text-sm font-medium uppercase tracking-wider pb-4" onclick="switchTab('pros', this)">Advantages</button>
+                        <button class="tab-btn text-sm font-medium text-zinc-400 hover:text-blue-600 uppercase tracking-wider pb-4 transition-colors" onclick="switchTab('cons', this)">Limitations</button>
+                    </div>
+                    
+                    <div id="tab-pros" class="tab-content">
+                        <ul class="space-y-4">
+                            ${mat.pros.map(p => `<li class="flex items-start"><span class="text-blue-500 font-mono mr-4 text-sm mt-0.5 font-bold">+</span> <span class="text-base text-zinc-700 font-light leading-relaxed">${p}</span></li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div id="tab-cons" class="tab-content hidden">
+                        <ul class="space-y-4">
+                            ${mat.cons.map(c => `<li class="flex items-start"><span class="text-red-400 font-mono mr-4 text-sm mt-0.5 font-bold">-</span> <span class="text-base text-zinc-700 font-light leading-relaxed">${c}</span></li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.switchTab = function(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('tab-active', 'text-blue-700');
+                el.classList.add('text-zinc-400');
+            });
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            btnElement.classList.remove('text-zinc-400');
+            btnElement.classList.add('tab-active', 'text-blue-700');
+        };
+
+        function renderComparisonTable() {
+            const tbody = document.getElementById('comparison-table-body');
+            let html = '';
+            materialData.forEach(mat => {
+                const isBenchmark = mat.category.includes('Injection');
+                html += `
+                    <tr class="hover:bg-zinc-50 transition-colors">
+                        <td class="py-5 pr-5 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <span class="w-2 h-2 rounded-full mr-4" style="background-color: ${mat.color}"></span>
+                                <div>
+                                    <span class="text-base ${isBenchmark ? 'text-zinc-500 font-light' : 'text-zinc-900 font-medium'}">${mat.name}</span>
+                                    ${isBenchmark ? '<span class="ml-3 text-[10px] font-mono uppercase text-zinc-400 tracking-wider">Benchmark</span>' : ''}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-5 pr-5 whitespace-nowrap text-base text-zinc-600 font-light">${mat.tech.replace(' Printing', '')}</td>
+                        <td class="py-5 pr-5 whitespace-nowrap text-base text-zinc-600 font-light">${mat.hardness.split('(')[0]}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function initRadarChart() {
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            
+            const datasets = materialData.map((mat, index) => {
+                const colorBase = mat.color.replace('1)', '');
+                const isBenchmark = mat.category.includes('Injection');
+                
+                // Show LSR, BioMed, and TPU by default
+                const shouldHide = !['commercial-lsr', 'biomed-elastic', 'medical-tpu'].includes(mat.id);
+
+                return {
+                    label: mat.name,
+                    data: [
+                        mat.scores.comfort,
+                        mat.scores.safety,
+                        mat.scores.durability,
+                        mat.scores.printability,
+                        mat.scores.cost
+                    ],
+                    backgroundColor: `${colorBase}0.1)`, // Very subtle fill
+                    borderColor: mat.color,
+                    pointBackgroundColor: mat.color,
+                    pointBorderColor: '#ffffff',
+                    pointHoverBackgroundColor: '#ffffff',
+                    pointHoverBorderColor: mat.color,
+                    borderWidth: 2,
+                    borderDash: isBenchmark ? [5, 5] : [], // Dashed for benchmarks
+                    hidden: shouldHide
+                };
+            });
+
+            Chart.defaults.font.family = "'Inter', sans-serif";
+            
+            radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Comfort', 'Biocompatibility', 'Durability', 'Print Ease', 'Accessibility'],
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(24, 24, 27, 0.05)' }, // zinc-900 at 5%
+                            grid: { color: 'rgba(24, 24, 27, 0.05)' },
+                            pointLabels: {
+                                font: { size: 12, weight: '500' }, // Increased font size
+                                color: '#71717a' // zinc-500
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                max: 10,
+                                stepSize: 2,
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#18181b', // zinc-900
+                            titleFont: { size: 14, weight: '500' }, // Increased font size
+                            bodyFont: { size: 13, weight: '300' }, // Increased font size
+                            padding: 14,
+                            cornerRadius: 4,
+                            displayColors: true,
+                            boxPadding: 4,
+                            callbacks: {
+                                label: function(context) {
+                                    return ` Score: ${context.raw}/10`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            generateCustomLegend();
+        }
+
+        function generateCustomLegend() {
+            const legendContainer = document.getElementById('chart-legend-controls');
+            legendContainer.innerHTML = '';
+
+            radarChart.data.datasets.forEach((dataset, index) => {
+                const btn = document.createElement('button');
+                const isHidden = dataset.hidden;
+                
+                // Clean pill buttons for legend
+                btn.className = `px-4 py-2 text-sm border rounded transition-colors flex items-center
+                    ${isHidden 
+                        ? 'bg-transparent border-zinc-200 text-zinc-400 hover:border-zinc-300' 
+                        : 'bg-zinc-50 border-zinc-300 text-zinc-900 font-medium'}`;
+                
+                let btnText = dataset.label.replace(' (Benchmark)', '');
+                if (btnText.includes('Silicone') && !btnText.includes('Rubber')) btnText = 'Silicone Cast';
+                if (btnText.includes('Polycarbonate')) btnText = 'PC/ABS';
+
+                btn.innerHTML = `
+                    <span class="w-2.5 h-2.5 rounded-full mr-3" 
+                          style="background-color: ${isHidden ? '#e4e4e7' : dataset.borderColor}"></span>
+                    ${btnText}
+                `;
+
+                btn.onclick = () => {
+                    const meta = radarChart.getDatasetMeta(index);
+                    meta.hidden = meta.hidden === null ? !radarChart.data.datasets[index].hidden : null;
+                    radarChart.update();
+                    generateCustomLegend();
+                };
+
+                legendContainer.appendChild(btn);
+            });
+        }
+    </script>
+</body>
+</html>
